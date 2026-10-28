@@ -1,0 +1,2 @@
+Ubuntu Linux
+Intel® Pentium(R) CPU 3825U @ 1.90GHz × 4

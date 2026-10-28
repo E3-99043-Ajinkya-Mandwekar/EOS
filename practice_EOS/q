@@ -1,0 +1,48 @@
+EOS Integrated Practical — Question 1
+
+Advanced
+40 marks · Practice paper
+Linux C programming
+
+Problem statement: Sensor Data Acquisition and Client–Server Monitoring System
+
+Design a C program that simulates an industrial sensor monitoring system. A parent process generates sensor data, shares it with child processes, and communicates with a TCP server. The system must use IPC, synchronization, and proper resource management.
+
+1. Process creation — 5 marks
+- Create a parent process P.
+- The parent must create two child processes, C1 and C2, using fork().
+- The parent must wait for both children to finish using wait() or waitpid().
+- Handle errors from process creation.
+  
+  2. Shared memory — 8 marks
+- The parent creates a shared-memory segment using shmget().
+- Attach it using shmat().
+- Store five sensor readings in shared memory.
+- Child C1 reads the shared values and calculates their average.
+- Detach and remove the shared-memory segment using shmdt() and shmctl().
+  
+  3. Synchronization — 7 marks
+- Use a semaphore to ensure C1 reads the readings only after the parent has finished writing them.
+- Initialize the synchronization mechanism correctly.
+- Ensure that the consumer does not read incomplete data.
+  
+  4. Pipe communication — 6 marks
+- Create a pipe using pipe().
+- Child C1 sends the calculated average to the parent through the pipe.
+- The parent reads and displays the result.
+- Close unused pipe ends in each process.
+  
+  5. TCP client–server communication — 10 marks
+- Implement a TCP server that creates a socket, binds it to a port, listens, and accepts a client.
+- The parent process acts as the client and connects to the server.
+- The parent sends the calculated average to the server.
+- The server checks whether the average exceeds a predefined threshold of 50.
+- The server sends back either NORMAL or HIGH.
+- The client displays the server's response.
+Required calls include socket(), bind(), listen(), accept(), connect(), send() or write(), and recv() or read().
+
+6. Error handling and cleanup — 4 marks
+- Check system-call return values.
+- Close sockets, pipes, and other file descriptors.
+- Detach and remove shared memory.
+- Release synchronization resources.
